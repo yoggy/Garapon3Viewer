@@ -25,6 +25,8 @@ public class Garapon3Activity extends Activity {
 	SharedPreferences prefs;
 	final int PREFERENCE_REQUEST_CODE = 100;
 
+	int login_submit_count = 0;
+	
 	@SuppressWarnings("deprecation")
 	@SuppressLint("SetJavaScriptEnabled")
 	@Override
@@ -129,6 +131,11 @@ public class Garapon3Activity extends Activity {
 		webview.loadUrl("javascript:$('#loginid').val('" + user + "');");
 		webview.loadUrl("javascript:$('#passwd').val('" + pass + "');");
 		webview.loadUrl("javascript:window.document.forms[0].submit();");
+		
+		login_submit_count ++;
+		if (login_submit_count > 2) {
+			webview.loadData("", "text/html", "UTF-8");
+		}
 	}
 
 	public void pressBackButton() {
@@ -156,6 +163,7 @@ public class Garapon3Activity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == PREFERENCE_REQUEST_CODE) {
+			login_submit_count = 0;
 			String url = prefs.getString(
 					getResources().getString(R.string.pref_url_key), "");
 			webview.loadUrl(url);
