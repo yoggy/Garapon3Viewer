@@ -13,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -28,6 +29,8 @@ public class Garapon3Activity extends Activity {
 	@SuppressLint("SetJavaScriptEnabled")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_garapon3);
 
@@ -37,8 +40,8 @@ public class Garapon3Activity extends Activity {
 		prefs = PreferenceManager.getDefaultSharedPreferences(this); // MODE_PRIVATE
 		String url = prefs.getString(
 				getResources().getString(R.string.pref_url_key), "");
-		if (url == "")
-			intentPreference();
+		//if (url == "")
+		//	intentPreference();
 
 		// webview settings
 		webview.setWebViewClient(new WebViewClient() {
